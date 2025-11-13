@@ -1,0 +1,209 @@
+/* Fonte */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+    --game-width: 780px;
+    --game-height: 420px;
+    --road-height-percent: 46%;
+}
+
+/* corpo */
+body {
+    background: #0b1220;
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    padding: 18px 0 140px;
+    margin: 0;
+}
+
+/* MENU */
+#menu-container h1 {
+    color: #ffcc00;
+    text-shadow: 2px 2px #000;
+}
+
+.car-option {
+    width: 170px;
+    height: 100px;
+    object-fit: contain;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: transform .12s, border-color .12s;
+}
+
+.car-option:hover {
+    transform: scale(1.05);
+    border-color: #ffcc00;
+}
+
+/* HUD */
+#lives-display,
+#score-display {
+    color: #ffd54f;
+    font-size: 13px;
+    text-shadow: 1px 1px #000;
+}
+
+/* ÁREA DO JOGO – agora com céu e pista normal */
+#game-container {
+    width: 100%;
+    max-width: var(--game-width);
+    height: var(--game-height);
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 3px solid #11161a;
+
+    /* Céu azul claro */
+    background: linear-gradient(#7ec8ff 0%, #a9ddff 50%, #c8ebff 100%);
+}
+
+/* Camadas de background */
+.bg-layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 200%;
+    height: 100%;
+    background-repeat: repeat-x;
+}
+
+/* SOMENTE nuvens — prédios foram removidos */
+/* SOMENTE nuvens — prédios removidos */
+.bg-far {
+    background: url("cenario.png");
+    z-index: 1;
+    animation: moveFar 14s linear infinite;
+}
+
+
+/* Remove prédios completamente */
+.bg-mid,
+.bg-near {
+    background: none;
+    animation: none;
+}
+
+
+/* Estrada */
+#road-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--road-height-percent);
+    z-index: 4;
+    overflow: hidden;
+}
+
+/* ASFALTO LISO (sem textura estranha e sem perspectiva) */
+.road-surface {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: #2c2c2c;
+}
+
+/* Divisórias entre faixas */
+#lane-separators {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--road-height-percent);
+    z-index: 6;
+    pointer-events: none;
+}
+
+.lane-sep {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 6px;
+    display: flex;
+    justify-content: center;
+}
+
+.lane-sep .dashed {
+    width: 70%;
+    height: 6px;
+    background: repeating-linear-gradient(90deg,
+            #ffd400 0px 10px,
+            transparent 10px 22px);
+    border-radius: 3px;
+}
+
+/* Linhas que passam */
+.lane-line {
+    position: absolute;
+    width: 37px;
+    height: 6px;
+    background: #ffd400;
+    border-radius: 3px;
+    z-index: 7;
+    animation: lineMove 1.05s linear infinite;
+}
+
+@keyframes lineMove {
+    from {
+        transform: translateX(0)
+    }
+
+    to {
+        transform: translateX(-140px)
+    }
+}
+
+/* Carro */
+#player-car {
+    position: absolute;
+    left: 56px;
+    width: 120px;
+    height: 60px;
+    z-index: 10;
+    transition: top .12s ease-out;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Obstáculos */
+.obstacle {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: #c28a42;
+    border: 3px solid #7b5326;
+    z-index: 8;
+}
+
+
+
+/* Aviso antes do obstáculo aparecer */
+.warning {
+    position: absolute;
+    right: 8px;
+    width: 0;
+    height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-bottom: 22px solid #ffd400;
+    transform: rotate(90deg);
+    animation: blink .6s linear infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1
+    }
+
+    50% {
+        opacity: 0.1
+    }
+}
+
